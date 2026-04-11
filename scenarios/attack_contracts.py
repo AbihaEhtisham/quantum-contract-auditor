@@ -1,5 +1,5 @@
 """
-attack_contracts.py
+scenarios/attack_contracts.py
 -------------------
 Defines VULNERABLE transaction scenarios — commands that VIOLATE the
 CFG safety grammar, triggering the q_reject trap state.

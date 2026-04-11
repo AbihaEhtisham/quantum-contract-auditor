@@ -1,5 +1,5 @@
 """
-safe_contracts.py
+scenarios/safe_contracts.py
 -----------------
 Defines SAFE transaction scenarios — commands that conform to the
 CFG safety grammar:  SAFE → AUTH CHECK UPDATE CALL

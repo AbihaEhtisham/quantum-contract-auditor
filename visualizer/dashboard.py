@@ -1,5 +1,5 @@
 """
-dashboard.py  —  Rich terminal dashboard for the Quantum Smart Contract Auditor.
+visualizer/dashboard.py  —  Rich terminal dashboard for the Quantum Smart Contract Auditor.
 """
 import time
 from rich import box

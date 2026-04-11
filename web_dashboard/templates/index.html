@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Contract Auditor | NUST BSCS-14D</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="quantum-icon">⚛</span>
+                <h1>QUANTUM CONTRACT AUDITOR</h1>
+            </div>
+            <div class="subtitle">Formal Grammar + Quantum Walk + Qiskit AerSimulator</div>
+            <div class="team">NUST BSCS-14D | Eman Fatima & Abiha Ehtisham | Dr. Iqbal</div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Panel: Input & Controls -->
+            <div class="panel input-panel">
+                <h2>🔍 Transaction Auditor</h2>
+                <div class="input-group">
+                    <input type="text" id="commandInput" placeholder="Enter DSL command (e.g., ADMIN MINT TOKEN)" 
+                           list="commandSuggestions">
+                    <datalist id="commandSuggestions">
+                        <option value="ADMIN MINT TOKEN">
+                        <option value="USER TRANSFER FUNDS">
+                        <option value="CALL WITHDRAW BALANCE">
+                        <option value="TRANSFER FUNDS CALL">
+                        <option value="MINT TOKEN">
+                    </datalist>
+                    <button onclick="auditCommand()" id="auditBtn">⚛ AUDIT NOW</button>
+                </div>
+                
+                <div class="quick-scenarios">
+                    <h3>Quick Test Scenarios</h3>
+                    <div class="scenario-buttons">
+                        <button class="safe-btn" onclick="quickAudit('ADMIN MINT TOKEN')">✓ SAFE: Mint</button>
+                        <button class="safe-btn" onclick="quickAudit('USER TRANSFER FUNDS')">✓ SAFE: Transfer</button>
+                        <button class="vuln-btn" onclick="quickAudit('CALL WITHDRAW BALANCE')">✗ VULN: Reentrancy</button>
+                        <button class="vuln-btn" onclick="quickAudit('MINT TOKEN')">✗ VULN: Unauthorized</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel: 3D Quantum Visualization -->
+            <div class="panel viz-panel">
+                <h2>⚛ Quantum Circuit Visualization</h2>
+                <div id="canvas-container">
+                    <canvas id="quantum-canvas"></canvas>
+                </div>
+                <div class="viz-stats">
+                    <span id="qubitCount">Qubits: 0</span>
+                    <span id="circuitDepth">Depth: 0</span>
+                </div>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="panel results-panel">
+                <h2>📊 Audit Results</h2>
+                <div id="result-display">
+                    <div class="result-placeholder">
+                        <p>Enter a command to begin quantum audit...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel: Detailed Analysis -->
+        <div class="bottom-panels">
+            <!-- Grammar Tree -->
+            <div class="panel grammar-panel">
+                <h2>🌳 Grammar Derivation Tree</h2>
+                <div id="grammar-tree">
+                    <svg id="tree-svg" width="100%" height="200"></svg>
+                </div>
+            </div>
+
+            <!-- Quantum Walk Animation -->
+            <div class="panel walk-panel">
+                <h2>🚶 Quantum Walk Simulation</h2>
+                <canvas id="walk-canvas" width="400" height="200"></canvas>
+                <div class="walk-stats">
+                    <div class="prob-bar">
+                        <div class="safe-prob" id="safeProbBar" style="width: 0%">SAFE</div>
+                        <div class="vuln-prob" id="vulnProbBar" style="width: 0%">VULN</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Circuit Stats -->
+            <div class="panel stats-panel">
+                <h2>📈 Quantum Statistics</h2>
+                <canvas id="histogram-canvas" width="300" height="150"></canvas>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <label>Confidence</label>
+                        <div class="value" id="confidenceValue">0%</div>
+                    </div>
+                    <div class="stat">
+                        <label>Quantum Energy</label>
+                        <div class="value" id="energyValue">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="status" id="status">🟢 Ready</div>
+            <div class="metrics">
+                <span>⚛ Quantum-powered</span>
+                <span>🔐 Formal Grammar CFG</span>
+                <span>🚶 Quantum Walk Search</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/quantum-viz.js"></script>
+    <script src="/static/js/websocket.js"></script>
+    <!-- Add this after the existing scripts -->
+<script>
+    // Initialize 3D visualization when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof init3DVisualization === 'function') {
+            init3DVisualization();
+        }
+    });
+    
+    // Override displayResults to include 3D animations
+    const originalDisplayResults = window.displayResults;
+    if (originalDisplayResults) {
+        window.displayResults = function(result) {
+            originalDisplayResults(result);
+            
+            // Update 3D visualization
+            if (typeof animateQuantumStates === 'function') {
+                animateQuantumStates(result);
+            }
+            
+            if (typeof updateCircuitVisualization === 'function') {
+                updateCircuitVisualization(result.circuit.n_qubits);
+            }
+            
+            // Create probability wave effect for vulnerabilities
+            if (result.verdict === 'VULNERABLE' && typeof createProbabilityWave === 'function') {
+                const prob = result.circuit.safe_probability;
+                createProbabilityWave(1 - prob, true);
+            }
+        };
+    }
+</script>
+</body>
+</html>
