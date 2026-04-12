@@ -12,42 +12,51 @@ class VerdictEngine:
         # Weights for ensemble
         self.weights = {
             'grammar': 0.50,      # Grammar is most important
-            'circuit': 0.30,      # Quantum circuit results
-            'quantum_walk': 0.20   # Walk simulation
+            'circuit': 0.25,      # Quantum circuit results
+            'quantum_walk': 0.25   # Walk simulation
         }
     
     def combine_verdicts(self, 
                         grammar_result: Dict[str, Any],
                         circuit_result: Dict[str, Any],
                         walk_result: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Combine all audit results into final verdict.
         
-        Args:
-            grammar_result: Results from grammar validation
-            circuit_result: Results from quantum circuit
-            walk_result: Results from quantum walk
-            
-        Returns:
-            Final verdict dictionary
-        """
-        # Extract individual verdicts
+        # 1. Extract base values
         grammar_safe = grammar_result.get('is_valid', False)
         grammar_confidence = grammar_result.get('confidence', 0.5)
+        tokens = grammar_result.get('tokens', [])
         
-        circuit_safe = not circuit_result.get('is_vulnerable', True)
         circuit_probability = circuit_result.get('safe_probability', 0.5)
-        
-        walk_safe = not walk_result.get('is_vulnerable', True)
         walk_probability = walk_result.get('acceptance_probability', 0.5)
-        
-        # Calculate weighted score
+
+        # 2. APPLY THE "PROBABILISTIC TRUST" LOGIC
+        # We check if the 'admin' role is present to adjust the grammar's weight
+        is_admin = 'admin' in [t.lower() for t in tokens]
+
+        if is_admin:
+            # If admin is present, we boost the score because admins 
+            # have inherent permission to bypass strict CFG paths.
+            grammar_score = 0.8 if grammar_safe else 0.7 
+        else:
+            # For non-admins, we are strict. If the path is incomplete, 
+            # they get a very low score (0.2).
+            grammar_score = grammar_confidence if grammar_safe else 0.2
+
+        # 3. Calculate weighted score with the new grammar_score
         weighted_score = (
-            self.weights['grammar'] * (grammar_confidence if grammar_safe else 1 - grammar_confidence) +
+            self.weights['grammar'] * grammar_score +
             self.weights['circuit'] * circuit_probability +
             self.weights['quantum_walk'] * walk_probability
         )
-        
+        # Determine Risk Level
+        if weighted_score > 0.8:
+            risk_level = "SECURE"
+        elif weighted_score > 0.6:
+            risk_level = "LOW RISK (Warning: Review Required)"
+        elif weighted_score > 0.4:
+            risk_level = "MEDIUM RISK (Potential Vulnerability)"
+        else:
+            risk_level = "CRITICAL VULNERABILITY"
         # Determine final verdict
         is_safe = weighted_score >= 0.6
         
@@ -64,6 +73,7 @@ class VerdictEngine:
         
         return {
             'final_verdict': 'SAFE' if is_safe else 'VULNERABLE',
+            'risk_level': risk_level,
             'confidence': confidence,
             'weighted_score': weighted_score,
             'attack_type': attack_type,
