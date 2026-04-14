@@ -2,13 +2,13 @@
 
 ```
   ██████  ███████  █████      ██    ██ ██████  ██████
- ██    ██ ██      ██   ██     ██    ██ ██   ██ ██   ██
- ██    ██ ███████ ███████     ██    ██ ██   ██ ██████
+██    ██ ██      ██   ██     ██    ██ ██   ██ ██   ██
+██    ██ ███████ ███████     ██    ██ ██   ██ ██████
 ██  ████      ██ ██   ██     ██    ██ ██   ██ ██
-  ██████  ███████ ██   ██      ██████  ██████  ██
+██████  ███████ ██   ██      ██████  ██████  ██
 ```
 
-# ⚛ Quantum-Enhanced Smart Contract Auditor
+#  Quantum-Enhanced Smart Contract Auditor
 
 **A Formal Grammar Approach to Blockchain Security**
 
@@ -84,31 +84,31 @@ A classical auditor walks the CFG state graph **one path at a time**. A quantum 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                     QUANTUM-ENHANCED SMART CONTRACT AUDITOR                     │
+│                     QUANTUM-ENHANCED SMART CONTRACT AUDITOR                    │
 ├──────────────┬─────────────────────┬─────────────────────┬───────────────────  │
 │  INPUT       │   PHASE 1           │   PHASE 2           │   PHASE 3           │
 │              │   Grammar Engine    │   Quantum Walk      │   Quantum Circuit   │
 │  DSL Command │                     │                     │                     │
-│  ──────────▶ │  Token Classifier   │  CFG Graph Builder  │  IQP Ansatz         │
+│  ──────────▶ │  Token Classifier   │  CFG Graph Builder  │  IQP Ansatz        │
 │              │       ↓             │       ↓             │       ↓             │
 │  Scenario    │  PDA State Machine  │  Amplitude Vector   │  Qiskit Circuit     │
-│  Bank        │  q0→q1→q2→q3       │  |ψ⟩ at q0          │  (3 qubits)         │
+│  Bank        │  q0→q1→q2→q3       │  |ψ⟩ at q0          │  (3 qubits)          │
 │              │       ↓             │       ↓             │       ↓             │
-│  CLI Flags   │  CFG Rules R1–R4   │  Grover Step × 6    │  AerSimulator       │
+│  CLI Flags   │  CFG Rules R1–R4   │  Grover Step × 6    │  AerSimulator        │
 │              │       ↓             │  64 paths explored  │  1024 shots         │
-│              │  Grammar Result ◆   │  Walk Result ◆      │  Circuit Result ◆   │
+│              │  Grammar Result ◆   │  Walk Result ◆      │  Circuit Result ◆ │
 ├──────────────┴─────────────────────┴─────────────────────┴───────────────────  │
-│                                                                                  │
+│                                                                                │
 │         ┌─────────────────────────────────────────────────────────┐            │
 │         │           VERDICT ENGINE (Weighted Ensemble)            │            │
 │         │   Grammar (50%)  +  Walk (20%)  +  Circuit (30%)        │            │
 │         └──────────────────────┬──────────────────────────────────┘            │
-│                                ↓                                                │
+│                                ↓                                               │
 │              ┌─────────────────┴──────────────────┐                            │
-│              ↓                                     ↓                            │
-│         ✓ SAFE                               ✗ VULNERABLE                      │
-│    Rich Dashboard                          Rich Dashboard                       │
-│    Matplotlib Plots                        Attack type + incident               │
+│              ↓                                     ↓                           │
+│         ✓ SAFE                               ✗ VULNERABLE                     │
+│    Rich Dashboard                          Rich Dashboard                      │
+│    Matplotlib Plots                        Attack type + incident              │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
