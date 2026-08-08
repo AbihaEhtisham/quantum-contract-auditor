@@ -45,7 +45,7 @@ DSL Command  ──▶  Grammar Engine  ──▶  Quantum Walk  ──▶  IQP 
 
 The key insight, borrowed from **DisCoCat / QNLP** (Coecke et al., 2020), is that compositional grammar structures and quantum circuit structures share the same underlying categorical mathematics — making it natural to map contract logic into quantum gates.
 
-## 🎥 Demo
+## Demo
 
 [![Watch the demo](https://img.youtube.com/vi/_lT4ZdsXi-E/hqdefault.jpg)](https://www.youtube.com/watch?v=_lT4ZdsXi-E)
 
